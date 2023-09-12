@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    </head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item"> 
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="jumbotron">
+                        <div class="">
+                            <h4>note text</h4>
+                        </div>
+                        <div class="">
+                            <button class="btn btn-lg btn-dark "data-toggle="modal" data-target="#login-modal">login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--modal-->
+
+        <div class="modal" tabindex="-1" id="login-modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">login</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  
+                    <div id="form-info"> </div>
+                    <form method="POST" id="login-user-form">
+                        <div class="form-group">
+                                <label>email</label>
+                                <input type="text" name="email" placeholder="enter your email" class="form-control">
+                        </div>
+                        <div class=""><small id="email-info"></small></div>
+    
+                        <div class="form-group">
+                            <label>password</label>
+                            <input type="password" name="password" placeholder="enter your password" class="form-control">
+                        </div>
+                        <div class=""><small id="password-info"></small></div>
+                        <hr>
+    
+                        <div class="form-group">
+                            <button class="btn btn-md btn-primary">login</button>
+                        </div>
+                    </form>
+                    <div class="form-group">
+                      <h4>not register ?</h4>
+                      <button class="btn btn-md btn-primary" onClick="loadRegisterModal()">register</button>
+                  </div>
+                   
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+           <!-- Register MOdal -->
+    <div class="modal" tabindex="-1" id="register-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div id="form-info"></div>
+            <form method="POST" id="register-user-form">
+                  <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" name='firstname' class="form-control" placeholder="Enter First name">
+                    <div><small id="firstname-info"></small></div>
+                </div>
+
+                  <div class="form-group">
+                    <label>Last name</label>
+                    <input type="text" name='lastname' class="form-control" placeholder="Enter Last name">
+                    <div><small id="lastname-info"></small></div>
+                </div>
+
+
+                  <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" name='email' class="form-control" placeholder="Enter Email">
+                      <div><small id="email-info"></small></div>
+                  </div>
+
+                  <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" name='password' class="form-control" placeholder="Enter Password">
+                      <div><small id="password-info"></small></div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Password Confirm</label>
+                    <input type="password" name='password_confirm' class="form-control" placeholder="Enter Password">
+                    <div><small id="password-confirm--info"></small></div>
+                </div>
+
+                  <div class="form-group">
+                      <button class="btn btn-md btn-primary">Create Account</button>
+                  </div>
+                  <hr>
+            </form>
+
+            <div class="form-group mt-2">
+              <h5>Already Registered?</h5>
+              <button class="btn btn-md btn-dark" onclick="loadLoginModal()">Log in instead</button>
+          </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--End of Register Modal-->
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="axios.min.js"></script>
+    <script src="localforage.min.js"></script>
+    <script src="cookie.js"></script>
+
+
+    <script>
+
+      document.addEventListener("DOMContentLoaded", ()=>{
+        let token = Cookies.get("notex");
+        if(token){
+          location.replace('user.html');
+        }else{
+          const registerUserForm = document.querySelector("#register-user-form");
+
+registerUserForm.addEventListener("submit", async function(event){
+
+  event.preventDefault();
+
+  let firstname = this.firstname.value.trim();
+  let lastname = this.lastname.value.trim();
+  let email = this.email.value.trim();
+  let password = this.password.value.trim();
+  
+
+
+  if(firstname.length > 0 && lastname.length > 0 && email.length > 0 && password.length > 0){
+
+    const feedback = await axios.post("http://localhost:2000/register-user", {
+
+      
+      firstname:firstname,
+      lastname:lastname,
+      email:email,
+      password:password
+    });
+
+
+    if(feedback.data.code === "success"){
+      alert("user created");
+      location.reload();
+
+    }else{
+      alert(feedback.data.message)
+    }
+
+
+  }
+
+})
+
+ 
+
+
+
+const loginUserForm = document.querySelector("#login-user-form");
+
+loginUserForm.addEventListener("submit",async function(event){
+
+    event.preventDefault();
+
+    let email = this.email.value.trim();
+    let password = this.password.value.trim();
+
+    const form_info = document.querySelector("#form-info");
+
+    const errors = [];
+
+    if(email.length == 0 ){
+        errors.push("please enter your email address");
+        document.querySelector('#email-info').innerHTML = `<span class="text-danger">please enter your email address</span>`
+
+    }else{
+        document.querySelector("#email-info").innerHTML = ``
+    }
+    if(password.length == 0 ){
+        errors.push("please enter your password");
+        document.querySelector('#password-info').innerHTML = `<span class="text-danger">please enter your password</span>`
+
+    }else{
+        document.querySelector("#password-info").innerHTML = ``
+    }
+
+    if(errors.length == 0){
+
+      //start a spinner
+      startSpinner();
+    
+        //make http request to the backend
+        const feedback = await axios.post("http://localhost:2000/login-user", {
+          
+          email:email,
+          password:password
+
+        })
+
+        console.log("trying to login :", feedback );
+        stopSpinner();
+
+        if(feedback.data.code === "error"){
+          form_info.innerHTML = `<div class="alert alert-danger">${feedback.data.message}</div>`
+
+      
+        }else{
+          const token = feedback.data.data.token;
+          const user = feedback.data.data.user;
+
+          Cookies.set("notex", token, { expires: 7 });
+
+          const user_stored = await localforage.setItem("notex-user", JSON.stringify(user));
+
+          if(user_stored){
+            location.replace("user.html");
+          }
+
+        }
+        
+    }else{
+
+      let form_info_errors;
+      form_info_errors = errors.map((form_error)=>{
+        return `<div class="alert alert-danger">${form_error}</div>`
+      })
+    }
+
+})
+
+function startSpinner(){
+  const form_info = document.querySelector("#form-info");
+  form_info.innerHTML = `<div class="spinner-border" role="status">
+           <span class="sr-only">Loading...</span>
+          </div>`
+
+  
+          
+}
+
+
+
+function stopSpinner(){
+
+}
+
+
+        }
+      })
+
+      function loadRegisterModal(){
+    $("#login-modal").modal("hide");
+
+    $("#register-modal").modal("show");
+    
+
+}
+
+function loadLoginModal(){
+$("#register-modal").modal("hide");
+
+$("#login-modal").modal("show");
+
+
+}
+
+     
+    </script>
+
+
+    </body>
+</html>

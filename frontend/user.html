@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    </head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <a class="navbar-brand text-light" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link text-light" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item text-light" href="#">Action</a>
+                <a class="dropdown-item text-light" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-light" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled text-light">Disabled</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+        <div class="container-fluid">
+
+          <div class="row">
+
+            <div class="col-md-4 h-100%">
+              <div class="">
+                <h2>My Note</h2>
+              </div>
+              <div class="">
+                <ul  id="myTittle">
+                  
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-8 mx-auto">
+
+              <div class="jumbotron">
+
+                <div class="m-2 p-2">
+                    <h4 id="welcome-page"></h4>
+                </div>
+
+                <div class="d-inline m-2 p-2">
+                    <button class="btn btn-lg btn-danger"data-toggle="modal" data-target="#login-modal" onclick="logoutUser()">logout</button>
+                </div>
+
+                <div class="d-inline m-2 p-2">
+                  <button class="btn btn-lg btn-primary " data-toggle="modal" data-target="#create_note">create new note</button>
+                </div>
+                </p>
+
+              </div>
+
+            </div>
+           
+          
+          </div>
+
+        </div>
+
+        <!--create-note-modal-->
+
+        <div class="modal" tabindex="-1" id="create_note">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">create-note</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+
+
+                <form method="post" id="create-note-form">
+                  <div class="form-group">
+                    <label>Note Tittle</label>
+                    <input type="text" id="input-tittle-control">
+                  </div>
+
+
+                  <div class="form-group">
+                    <label>Note Content</label>
+                    <textarea name="" id="input-content-control" name="form-content" cols="60" rows="5"></textarea>
+                  </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary">Save note</button>
+                  </div>
+                </form>
+
+
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- create new note -->
+
+
+        
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="axios.min.js"></script>
+    <script src="localforage.min.js"></script>
+    <script src="cookie.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script>
+
+
+       document.addEventListener("DOMContentLoaded", async function(){
+        let login_user = await localforage.getItem("notex-user");
+
+        if(login_user == null || typeof login_user == undefined){
+            location.replace("index.html");
+        }else{
+            login_user = JSON.parse(login_user);
+            let firstname = login_user.firstname;
+            document.querySelector("#welcome-page").innerHTML = `welcome ${firstname}`
+           const ck_editor =  CKEDITOR.replace("input-content-control");
+
+           const FormControl = document.querySelector("#create-note-form");
+
+            FormControl.addEventListener("submit", async function(event){
+              event.preventDefault()
+              let note_tittle = document.querySelector("#input-tittle-control").value.trim();
+              let note_Content = ck_editor.editable().getText().trim();
+
+              const feedback = await axios.post("http://localhost:2000/create-note", {
+                note_tittle:note_tittle,
+                note_content:note_Content
+              });
+             if(feedback.data.code =="success"){
+              const token = feedback.data.data.insertedId;
+              console.log(token)
+              // const token = feedback.data.data.insertedId;
+              // const result = await axios.post("http://localhost:2000/create-note",{token})
+
+
+              alert(feedback.data.message);
+              console.log(feedback.data)
+              document.querySelector("#myTittle").innerHTML =`<li><h4 class="d-inline">${feedback.data.data.note_tittle}</h4>
+                <button class="btn btn-md bg-primary d-inline">Get Note</button></li>`
+             }else{
+              alert(feedback.data.message)
+             }
+
+            
+              
+            
+              
+            })
+
+             let saveNote = ()=>{
+              
+              console.log(noteContent)
+
+              }
+          
+        }
+       })
+       
+
+      
+      
+  
+
+       async function logoutUser(){
+        const token = Cookies.get("notex");
+        if(token){
+
+          Cookies.remove("notex");
+          const feedback = await axios.post("http://localhost:2000/logout-user",{
+            token
+          })
+          console.log(feedback)
+
+          if(feedback.data.code == "logout-success"){
+
+            const removeUser = await localforage.removeItem("notex-user");
+
+            location.replace("/");
+          }
+
+        }
+        
+       }
+       
+    </script>
